@@ -1,0 +1,57 @@
+server:
+  port: 9003
+  shutdown: graceful
+  forward-headers-strategy: framework
+  logging:
+    stacktrace:
+      enabled: ${LOGGING_STACKTRACE:true}
+      deep: 5
+  servlet:
+    context-path: ${SERVER_CONTEXT_PATH:}
+
+springdoc:
+  api-docs:
+    path: /open-api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+
+spring:
+  application:
+    name: restapi
+    servlet:
+      multipart:
+        resolve-lazily: true
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:9002/rs_db}
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:rs_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:rs7854#90}
+
+  liquibase:
+    change-log: classpath:changelog/db.changelog-master.xml
+    enabled: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: ${LOGGING_SQL:false}
+
+  sql:
+    init:
+      mode: never
+
+minio:
+  url: ${SPRING_MINIO_SERVER:http://127.0.0.1:9000}
+  access:
+    name: rs_minio_user
+    pass: rsminio777
+  bucket: rs-bucket
+  folder: /
+
+info:
+  app:
+    version: 0.0.1

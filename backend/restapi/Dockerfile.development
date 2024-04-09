@@ -1,0 +1,5 @@
+FROM ghcr.io/graalvm/jdk-community:21
+WORKDIR /restapi
+COPY ./target/restapi.jar ./restapi.jar
+EXPOSE 9003
+CMD java -jar ./restapi.jar

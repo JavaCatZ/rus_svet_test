@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2024-03-22-01-create-hibernate-sequence" author="Bogdan Ch">
+        <createSequence sequenceName="hibernate_sequence" startValue="1"/>
+    </changeSet>
+
+    <changeSet id="2024-03-22-02-create-category-table" author="Bogdan Ch">
+        <createTable tableName="category">
+            <column name="id" type="bigint" defaultValueSequenceNext="hibernate_sequence">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="short_desc" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2024-03-22-03-create-product-table" author="Bogdan Ch">
+        <createTable tableName="product">
+            <column name="id" type="bigint" defaultValueSequenceNext="hibernate_sequence">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_desc" type="varchar(512)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="double precision">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_file_name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="create_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2024-03-22-04-create-user-table" author="Bogdan Ch">
+        <createTable tableName="usr">
+            <column name="id" type="bigint" defaultValueSequenceNext="hibernate_sequence">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2024-03-22-05-create-role-table" author="Bogdan Ch">
+        <createTable tableName="role">
+            <column name="id" type="bigint" defaultValueSequenceNext="hibernate_sequence">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2024-03-22-06-create-user-role-table" author="Bogdan Ch">
+        <createTable tableName="user_role">
+            <column name="id" type="bigint" defaultValueSequenceNext="hibernate_sequence">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2024-03-22-07-add-default-users" author="Bogdan Ch">
+        <insert tableName="usr">
+            <column name="id" value="1"/>
+            <column name="username" value="user@yandex.ru"/>
+            <column name="password" value="$2a$12$LkUW90VaSpc7d9oD052qhOMg504MGD0gs2qbFW8x7m4kw5Px6uRpC"/>
+        </insert>
+        <insert tableName="usr">
+            <column name="id" value="2"/>
+            <column name="username" value="admin@yandex.ru"/>
+            <column name="password" value="$2a$12$LkUW90VaSpc7d9oD052qhOMg504MGD0gs2qbFW8x7m4kw5Px6uRpC"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" value="1"/>
+            <column name="name" value="USER"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" value="2"/>
+            <column name="name" value="ADMIN"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="2"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="2"/>
+            <column name="role_id" value="2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
